@@ -27,9 +27,11 @@ class Inventory:
 
     def find_by_code(self, code):
 
+        code = code.upper()
+
         for product in self.products:
 
-            if product.code == code:
+            if product.code.upper() == code:
                 return product
 
         return None
@@ -82,6 +84,7 @@ class Inventory:
         product.stock -= quantity
 
         return True
+
 
     def calculate_inventory_value(self):
 

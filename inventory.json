@@ -1,0 +1,32 @@
+[
+    {
+        "code": "LOC0001",
+        "name": "CocaCola",
+        "brand": "",
+        "product_type": "purchased",
+        "cost": 1900.0,
+        "price": 2660.0,
+        "stock": 20,
+        "quick_entry": false
+    },
+    {
+        "code": "LOC0002",
+        "name": "Papas Lays grandes",
+        "brand": "Lays",
+        "product_type": "purchased",
+        "cost": 2100.0,
+        "price": 2940.0,
+        "stock": 0,
+        "quick_entry": false
+    },
+    {
+        "code": "LOC0003",
+        "name": "Fanta 2L",
+        "brand": "",
+        "product_type": "purchased",
+        "cost": 2000.0,
+        "price": 2800.0,
+        "stock": 0,
+        "quick_entry": false
+    }
+]

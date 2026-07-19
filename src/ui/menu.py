@@ -14,7 +14,6 @@ class Menu:
         self.inventory = inventory
         self.product_service = ProductService(inventory)
 
-
     def show(self):
 
         while True:
@@ -56,7 +55,6 @@ class Menu:
             else:
                 print("\nOpción inválida.")
 
-
     def create_product(self):
 
         print("\n=== Crear producto ===")
@@ -91,7 +89,6 @@ class Menu:
 
             print(f"\nError: {error}")
 
-
     def show_inventory(self):
 
         print("\n=== Inventario ===")
@@ -103,16 +100,7 @@ class Menu:
             return
 
         for product in products:
-
-            print("-" * 42)
-            print(f"Código : {product.code}")
-            print(f"Nombre : {product.name}")
-            print(f"Marca  : {product.brand or '-'}")
-            print(f"Tipo   : {product.product_type}")
-            print(f"Costo  : ${product.cost:.0f}")
-            print(f"Precio : ${product.price:.0f}")
-            print(f"Stock  : {product.stock}")
-
+            self._print_product(product)
 
     def search_product(self):
 
@@ -127,16 +115,7 @@ class Menu:
             return
 
         for product in results:
-
-            print("-" * 42)
-            print(f"Código : {product.code}")
-            print(f"Nombre : {product.name}")
-            print(f"Marca  : {product.brand or '-'}")
-            print(f"Tipo   : {product.product_type}")
-            print(f"Costo  : ${product.cost:.0f}")
-            print(f"Precio : ${product.price:.0f}")
-            print(f"Stock  : {product.stock}")
-
+            self._print_product(product)
 
     def add_stock(self):
 
@@ -157,8 +136,9 @@ class Menu:
             print("\nStock actualizado correctamente.")
 
         else:
-            print("\nNo fue posible actualizar el stock.")
-
+            print(
+                "\nCódigo inexistente o cantidad inválida."
+            )
 
     def sell_product(self):
 
@@ -180,5 +160,16 @@ class Menu:
 
         else:
             print(
-                "\nNo fue posible registrar la venta."
+                "\nCódigo inexistente, cantidad inválida o stock insuficiente."
             )
+
+    def _print_product(self, product):
+
+        print("-" * 42)
+        print(f"Código : {product.code}")
+        print(f"Nombre : {product.name}")
+        print(f"Marca  : {product.brand or '-'}")
+        print(f"Tipo   : {product.product_type}")
+        print(f"Costo  : ${product.cost:.0f}")
+        print(f"Precio : ${product.price:.0f}")
+        print(f"Stock  : {product.stock}")
