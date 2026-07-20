@@ -1,6 +1,7 @@
 """
 Smart Inventory
-System settings
+
+System settings.
 """
 
 
@@ -14,19 +15,11 @@ class Settings:
 
     DEFAULT_PRICE_MULTIPLIER = 1.40
 
-    # Internal identifiers
-
     INTERNAL_CODE_PREFIX = "LOC"
-
-    # Inventory
 
     LOW_STOCK_WARNING = 5
 
-    # Storage
-
-    INVENTORY_FILE = "inventory.json"
-
-    # Product categories
+    DATABASE_FILE = "inventory.db"
 
     VALID_PRODUCT_CATEGORIES = (
         "purchased",
@@ -39,8 +32,6 @@ class Settings:
         "manufactured": "internal",
         "loose": "manual",
     }
-
-    # Product units
 
     VALID_UNIT_TYPES = (
         "unit",

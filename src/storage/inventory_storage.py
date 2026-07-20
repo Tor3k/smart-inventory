@@ -1,10 +1,8 @@
 """
 Smart Inventory
 
-Inventory JSON storage.
+Inventory SQLite storage.
 """
-
-import json
 
 from src.core.inventory import Inventory
 from src.models.product import Product
@@ -12,66 +10,92 @@ from src.models.product import Product
 
 class InventoryStorage:
 
-    def __init__(self, file_path):
+    def __init__(self, database):
 
-        self.file_path = file_path
+        self.database = database
+        self.connection = database.get_connection()
 
     def save(self, inventory):
 
-        data = [
-            product.to_dict()
-            for product in inventory.get_products()
-        ]
+        cursor = self.connection.cursor()
 
-        with open(
-            self.file_path,
-            "w",
-            encoding="utf-8",
-        ) as file:
+        cursor.execute(
+            "DELETE FROM products"
+        )
 
-            json.dump(
-                data,
-                file,
-                indent=4,
-                ensure_ascii=False,
+        for product in inventory.get_products():
+
+            cursor.execute(
+                """
+                INSERT INTO products (
+
+                    identifier,
+                    identification_type,
+                    name,
+                    brand,
+                    product_category,
+                    unit_type,
+                    cost,
+                    price,
+                    stock,
+                    quick_entry
+
+                )
+
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    product.identifier,
+                    product.identification_type,
+                    product.name,
+                    product.brand,
+                    product.product_category,
+                    product.unit_type,
+                    product.cost,
+                    product.price,
+                    product.stock,
+                    int(product.quick_entry),
+                ),
             )
+
+        self.connection.commit()
 
     def load(self):
 
-        try:
+        cursor = self.connection.cursor()
 
-            with open(
-                self.file_path,
-                "r",
-                encoding="utf-8",
-            ) as file:
-
-                data = json.load(file)
-
-        except (
-            FileNotFoundError,
-            json.JSONDecodeError,
-        ):
-
-            return Inventory()
+        cursor.execute(
+            """
+            SELECT *
+            FROM products
+            """
+        )
 
         inventory = Inventory()
 
-        if not isinstance(data, list):
-            return inventory
-
-        for product_data in data:
+        for row in cursor.fetchall():
 
             try:
 
-                product = Product.from_dict(
-                    product_data
+                product = Product(
+                    identifier=row["identifier"],
+                    name=row["name"],
+                    brand=row["brand"],
+                    product_category=row["product_category"],
+                    unit_type=row["unit_type"],
+                    cost=row["cost"],
+                    price=row["price"],
+                    stock=row["stock"],
+                    quick_entry=bool(
+                        row["quick_entry"]
+                    ),
                 )
 
-                inventory.add_product(product)
+                inventory.add_product(
+                    product
+                )
 
             except (
-                KeyError,
                 ValueError,
                 TypeError,
             ):

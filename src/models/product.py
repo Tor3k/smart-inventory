@@ -39,7 +39,10 @@ class Product:
         )
 
         if (
-            identification_type in ("barcode", "internal")
+            identification_type in (
+                "barcode",
+                "internal",
+            )
             and not identifier
         ):
             raise ValueError(
@@ -72,7 +75,10 @@ class Product:
                 "Product stock cannot be negative."
             )
 
-        self.identification_type = identification_type
+        self.identification_type = (
+            identification_type
+        )
+
         self.identifier = identifier
 
         self.name = name.strip()
@@ -86,33 +92,3 @@ class Product:
         self.stock = stock
 
         self.quick_entry = quick_entry
-
-    def to_dict(self):
-
-        return {
-            "identification_type": self.identification_type,
-            "identifier": self.identifier,
-            "name": self.name,
-            "brand": self.brand,
-            "product_category": self.product_category,
-            "unit_type": self.unit_type,
-            "cost": self.cost,
-            "price": self.price,
-            "stock": self.stock,
-            "quick_entry": self.quick_entry,
-        }
-
-    @classmethod
-    def from_dict(cls, data):
-
-        return cls(
-            identifier=data.get("identifier"),
-            name=data["name"],
-            product_category=data["product_category"],
-            cost=data.get("cost"),
-            price=data.get("price"),
-            stock=data.get("stock", 0),
-            brand=data.get("brand"),
-            unit_type=data.get("unit_type", "unit"),
-            quick_entry=data.get("quick_entry", False),
-        )
