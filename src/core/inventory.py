@@ -8,54 +8,105 @@ Inventory management.
 class Inventory:
 
     def __init__(self):
-        self.products = []
 
+        self.products = []
 
     def add_product(self, product):
 
-        if self.code_exists(product.code):
+        if product is None:
+            return False
+
+        if (
+            product.identifier is not None
+            and self.identifier_exists(product.identifier)
+        ):
             return False
 
         self.products.append(product)
 
         return True
 
+    def remove_product(self, product):
+
+        if product not in self.products:
+            return False
+
+        self.products.remove(product)
+
+        return True
 
     def get_products(self):
+
         return self.products
 
+    def find_by_identifier(self, identifier):
 
-    def find_by_code(self, code):
+        if not identifier:
+            return None
 
-        code = code.upper()
+        identifier = identifier.strip().upper()
 
         for product in self.products:
 
-            if product.code.upper() == code:
+            if (
+                product.identifier is not None
+                and product.identifier.upper() == identifier
+            ):
                 return product
 
         return None
 
-
     def find_by_name(self, name):
+
+        if not name:
+            return []
+
+        name = name.strip().lower()
 
         results = []
 
         for product in self.products:
 
-            if name.lower() in product.name.lower():
+            if name in product.name.lower():
                 results.append(product)
 
         return results
 
+    def find_exact_product(
+        self,
+        name,
+        product_category,
+        unit_type=None,
+    ):
 
-    def code_exists(self, code):
-        return self.find_by_code(code) is not None
+        name = name.strip().lower()
 
+        for product in self.products:
 
-    def add_stock(self, code, quantity):
+            if (
+                product.name.lower() == name
+                and product.product_category
+                == product_category
+            ):
 
-        product = self.find_by_code(code)
+                if (
+                    product_category != "loose"
+                    or product.unit_type == unit_type
+                ):
+                    return product
+
+        return None
+
+    def identifier_exists(self, identifier):
+
+        return (
+            self.find_by_identifier(identifier)
+            is not None
+        )
+
+    def add_stock(self, identifier, quantity):
+
+        product = self.find_by_identifier(identifier)
 
         if product is None:
             return False
@@ -67,10 +118,9 @@ class Inventory:
 
         return True
 
+    def remove_stock(self, identifier, quantity):
 
-    def remove_stock(self, code, quantity):
-
-        product = self.find_by_code(code)
+        product = self.find_by_identifier(identifier)
 
         if product is None:
             return False
@@ -85,12 +135,16 @@ class Inventory:
 
         return True
 
-
     def calculate_inventory_value(self):
 
         total = 0
 
         for product in self.products:
-            total += product.cost * product.stock
+
+            if product.cost is not None:
+                total += (
+                    product.cost
+                    * product.stock
+                )
 
         return total

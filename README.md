@@ -8,29 +8,69 @@ The project follows a version-based roadmap, where each release introduces new f
 
 ## 🚀 Current Version
 
-**Version:** v0.1
+**Version:** v0.3
 
-This first version provides a functional console application focused on inventory management using Object-Oriented Programming (OOP).
+This version introduces persistent JSON storage, improved business logic, duplicate product detection, product editing, and a more robust inventory management workflow while maintaining a clean Object-Oriented architecture.
 
 ---
 
 ## ✨ Features
 
-* ➕ Add new products
-* 📋 Display all products
-* 🔍 Search products
-* 📦 Register stock entries
-* 💰 Register product sales
-* 📉 Automatic stock updates
-* ⚙️ Configurable product information
-* 🧱 Modular architecture using Python classes
+### 📦 Product Management
+
+- ➕ Create new products
+- ✏️ Modify existing products
+- 🔍 Search products by name
+- 📋 Display complete inventory
+- 🚫 Duplicate product detection
+- 🏷️ Automatic internal code generation
+- 💰 Automatic suggested sale price for purchased products
+
+### 📊 Inventory Management
+
+- 📦 Register stock entries
+- 💰 Register product sales
+- 📉 Automatic stock updates
+- 📈 Inventory value calculation
+
+### 🗂️ Product Categories
+
+- 🛒 Purchased products (barcode)
+- 🏭 Manufactured products (internal code)
+- ⚖️ Loose products (unit or kilogram)
+
+### ✅ Validations
+
+- Required fields
+- Positive values
+- Stock validation
+- Valid product categories
+- Valid unit types
+- Duplicate barcode detection
+- Duplicate product detection
+- Cost cannot exceed sale price
+
+### 💾 Persistence
+
+- JSON storage
+- Automatic save on exit
+- Automatic load on startup
+
+### 🧱 Architecture
+
+- Object-Oriented Programming (OOP)
+- Service layer
+- Separation of responsibilities
+- Modular project structure
+- Prepared for future SQLite migration
 
 ---
 
 ## 🛠️ Technologies
 
-* Python 3
-* Object-Oriented Programming (OOP)
+- Python 3
+- Object-Oriented Programming (OOP)
+- JSON
 
 ---
 
@@ -43,7 +83,6 @@ Bakery_management_system/
 │   └── design.md
 │
 ├── src/
-│   ├── main.py
 │   ├── config/
 │   ├── core/
 │   ├── models/
@@ -61,12 +100,13 @@ Bakery_management_system/
 
 ## 🎯 Project Roadmap
 
-* ✅ **v0.1** — Console application using OOP
-* 🔄 **v0.2** — JSON data persistence
-* ⏳ **v0.3** — Additional inventory improvements
-* 🎯 **v1.0** — First complete inventory management system
-* 📱 **v2.0** — Mobile-friendly application
-* 🤖 **v3.0** — AI-powered features and automation
+- ✅ **v0.1** — Console application using OOP
+- ✅ **v0.2** — JSON data persistence
+- ✅ **v0.3** — Business logic improvements, duplicate detection and product editing
+- 🔄 **v0.4** — SQLite database integration
+- 🎯 **v1.0** — First complete inventory management system
+- 📱 **v2.0** — Mobile-friendly application
+- 🤖 **v3.0** — AI-powered features and automation
 
 ---
 
@@ -80,9 +120,9 @@ python main.py
 
 ## 📌 Long-Term Vision
 
-Smart Inventory is intended to become a complete management system for a small bakery business, including inventory control, sales, purchasing, and business management tools.
+Smart Inventory is intended to become a complete management system for a small bakery business, including inventory control, sales, purchasing, pricing, and business management tools.
 
-The project is being developed incrementally, with each version serving as a foundation for the next.
+The project is being developed incrementally, with each version serving as the foundation for the next. The next major milestone is replacing JSON persistence with SQLite while keeping the existing architecture intact.
 
 ---
 
